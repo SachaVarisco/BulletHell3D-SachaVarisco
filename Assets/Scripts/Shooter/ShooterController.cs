@@ -1,0 +1,37 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ShooterController : MonoBehaviour
+{
+    [Header("Timer")]
+    private float currentTime;
+    [SerializeField] private float maxTime;
+
+    [Header("Gun")]
+    private Transform gun;
+    
+
+    private void Start()
+    {
+        currentTime = maxTime;
+        gun = transform.GetChild(0).gameObject.transform;
+    }
+
+    private void Update()
+    {
+        //currentTime -= Time.deltaTime;
+        if (Input.GetButtonDown("Fire1") /*|| currentTime <= 0*/)
+        {
+            GameObject Bullet = Pool.Instance.GetBullet();
+            if (Bullet != null)
+            {
+                Bullet.transform.position = gun.position;
+                Bullet.SetActive(true);
+                
+            }
+            currentTime = maxTime;
+        }
+    }
+    
+}
