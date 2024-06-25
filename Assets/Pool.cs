@@ -37,7 +37,6 @@ public class Pool : MonoBehaviour
         {
             if (!bullet.gameObject.activeInHierarchy)
             {
-                //BulletList.Remove(bullet.gameObject);
                 return bullet.gameObject;
             }
         }
