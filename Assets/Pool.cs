@@ -41,6 +41,10 @@ public class Pool : MonoBehaviour
             }
         }
         Debug.Log("Nueva bala");
+
+        // Cada vez que se sobrepase el maximo, reiniciar el contador y al finalizar eliminar las inactivas sobrantes
+        // Corrutina o poner un contador en el update con varios if
+
         GameObject Bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity);
         BulletList.Add(Bullet);
         Bullet.transform.SetParent(gameObject.transform);
