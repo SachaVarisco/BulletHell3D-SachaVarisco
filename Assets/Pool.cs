@@ -48,24 +48,20 @@ public class Pool : MonoBehaviour
         GameObject Bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity);
         BulletList.Add(Bullet);
         Bullet.transform.SetParent(gameObject.transform);
+        StartCoroutine(DestroyBullet(Bullet));
         return Bullet;
     }
 
     public void ReturnBullet(GameObject Bullet)
     {
-        //BulletList.Add(Bullet);
-        
-        /*for (int i = 0; i < BulletList.Count; i++) // Intento de que se borren las balas sobrantes
-        {
-            if (i > 3)
-            {
-                GameObject  BulletBye = BulletList[i];
-                BulletList.Remove(BulletBye);
-                Destroy(BulletBye);
-            }
-            Bullet.SetActive(false);
-        } */
         Bullet.SetActive(false); 
+    }
+
+    private IEnumerator DestroyBullet(GameObject Bullet){
+
+        yield return new WaitForSeconds(5f);
+        BulletList.Remove(Bullet);
+        Destroy(Bullet);
     }
     
 }
