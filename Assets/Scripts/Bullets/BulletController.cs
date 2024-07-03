@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
+    [Header("Pool")]
+    
+    [SerializeField] private GameObject pool;
+    
     [Header("Speed")]
     [SerializeField] private float speed;
 
@@ -35,7 +39,8 @@ public class BulletController : MonoBehaviour
             currentTime -= Time.deltaTime;
             if (currentTime <= 0)
             {
-                Pool.Instance.ReturnBullet(gameObject);
+                pool.GetComponent<Pool>().ReturnBullet(gameObject);
+                //Pool.Instance.ReturnBullet(gameObject);
                 currentTime = maxTime; 
             }
         }

@@ -6,7 +6,8 @@ public class Pool : MonoBehaviour
 {
     public static Pool Instance;
     public GameObject BulletPrefab;
-
+    [SerializeField] private int ammoBullet;
+    [SerializeField] private int maxBullet;
     private List<GameObject> BulletList;
     private void Awake()
     {
@@ -23,7 +24,7 @@ public class Pool : MonoBehaviour
     private void Start()
     {
         BulletList = new List<GameObject>();
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < ammoBullet; i++)
         {
             GameObject Bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity);
             Bullet.transform.SetParent(gameObject.transform);
@@ -40,28 +41,35 @@ public class Pool : MonoBehaviour
                 return bullet.gameObject;
             }
         }
-        Debug.Log("Nueva bala");
-
-        // Cada vez que se sobrepase el maximo, reiniciar el contador y al finalizar eliminar las inactivas sobrantes
-        // Corrutina o poner un contador en el update con varios if
-
-        GameObject Bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity);
-        BulletList.Add(Bullet);
-        Bullet.transform.SetParent(gameObject.transform);
-        StartCoroutine(DestroyBullet(Bullet));
-        return Bullet;
+        if (BulletList.Count < maxBullet)
+        {
+            GameObject Bullet = Instantiate(BulletPrefab, transform.position, Quaternion.identity);
+            BulletList.Add(Bullet);
+            Bullet.transform.SetParent(gameObject.transform);
+            StartCoroutine(DestroyBullet(Bullet));
+            Debug.Log("Nueva bala " + BulletList.Count);
+            return Bullet;
+        }
+        else
+        {
+            Debug.Log("No more bullets " + BulletList.Count);
+            return null;
+        }
     }
 
     public void ReturnBullet(GameObject Bullet)
     {
-        Bullet.SetActive(false); 
+        Bullet.SetActive(false);
     }
 
-    private IEnumerator DestroyBullet(GameObject Bullet){
-
+    private IEnumerator DestroyBullet(GameObject Bullet)
+    {
         yield return new WaitForSeconds(5f);
-        BulletList.Remove(Bullet);
-        Destroy(Bullet);
+        if (!Bullet.activeSelf)
+        {
+            BulletList.Remove(Bullet);
+            Destroy(Bullet);
+        }
     }
-    
+
 }

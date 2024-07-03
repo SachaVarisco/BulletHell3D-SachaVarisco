@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class ShooterController : MonoBehaviour
 {
+    [Header("Pool")]
+    
+    [SerializeField] private GameObject pool;
+
     [Header("Timer")]
     private float currentTime;
     [SerializeField] private float maxTime;
 
     [Header("Gun")]
     private Transform gun;
-    
 
     private void Start()
     {
@@ -20,10 +23,10 @@ public class ShooterController : MonoBehaviour
 
     private void Update()
     {
-        //currentTime -= Time.deltaTime;
-        if (Input.GetButtonDown("Fire1") /*|| currentTime <= 0*/)
+        if (Input.GetButtonDown("Fire1"))
         {
-            GameObject Bullet = Pool.Instance.GetBullet();
+            GameObject Bullet = pool.GetComponent<Pool>().GetBullet();
+            //GameObject Bullet = Pool.Instance.GetBullet();
             if (Bullet != null)
             {
                 Bullet.transform.position = gun.position;
@@ -33,5 +36,5 @@ public class ShooterController : MonoBehaviour
             currentTime = maxTime;
         }
     }
-    
+
 }
